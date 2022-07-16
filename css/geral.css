@@ -1,0 +1,313 @@
+body, h1, h2, h3, ul, li, p, dd, dt, dl {
+  margin: 0px;
+  padding: 0px;
+}
+
+img { /*Faz com que as imagens fiquem automaticamente responsivas*/
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  background: #faf6ed;
+  color: #222222;
+  -webkit-font-smoothing: antialiased; /* deixa a fonte mais limpa*/
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 120px minmax(300px, 800px) 1fr;
+}
+
+.menu {
+  grid-column: 3/5; /*pega do inicio da terceira coluna até o final da ultima (quinta) => sao 4 colunas no total mas o final da ultima coluna é a quinta pois as colunas sao divididas em linhas, ou seja começa na linha 3 e termina na linha 5*/
+  margin-top: 2rem; /*rem é unidade relativa do pixel da unidade relativa do site, se for 16px será 2*16px = 32px*/
+  margin-bottom: 2rem;
+  background: #FB5;
+}
+
+.menu ul {
+  display: flex; /* para colocar um item ao lado do outro (antes estava um embaixo do outro*/
+  flex-wrap: wrap; /* faz os itens quebrarem caso nao caibam mais dentro ao diminuir a tela*/
+  padding: 10px;
+}
+
+.menu li a {
+  display: block;
+  padding: 10px;
+  color: #222222;
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: .875rem;
+  letter-spacing: .1em;
+}
+
+.grid-section {
+  grid-column: 2/4;/* pegar a coluna: linha 2 até a linha 4*/
+  width: 100%;
+  box-sizing: border-box; /*para acumular no tamanho dele o pedding que vou colocar abaixo, no caso 10px*/
+  padding: 10px; /*evita que grude na ponta*/
+  display: grid; /*o conteudo de dentro vai ser grid layout*/
+  grid-template-columns: 90px 300px 1fr;
+  grid-gap: 20px; /*distancia entre cada coluna*/
+  margin-bottom: 4rem;
+}
+
+.titulo {
+  font-family: 'Playfair Display SC', georgia;
+  font-size: 6rem;
+  line-height: 1;
+  font-weight: 400; /*normal*/
+  margin-bottom: 1rem;
+  grid-column: 1/4; /*vai começar na linha 1 e terminar na linha 4*/
+}
+
+.animais h2 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 1rem;
+  color: #E54;
+}
+
+.animais h2::before { /*antes dele*/
+ content: '';
+ display: inline-block; /*pra ficar na mesma linha*/
+ width: 40px;
+ height: 10px;
+ margin-right: 10px;
+ background: #FB5;
+}
+
+.animais p {
+  font-family: Helvetica, Arial;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.animais-lista {
+  height: 370px;
+  overflow-y: scroll; /*o que passar na altura definida acima de 370px, no eixo y colocar scroll*/
+  grid-column: 2; /*as imagens dos animais ficarão na segunda coluna*/
+}
+
+.animais-lista li {
+  cursor: pointer;
+}
+
+.animais-lista::-webkit-scrollbar {/*define a largura do scrollbar*/
+  width: 18px;
+}
+
+.animais-lista::-webkit-scrollbar-thumb { /*estilizando o scroll*/
+  background: #FB5;
+  border-left: 4px solid #faf6ed;
+  border-right: 4px solid #faf6ed;
+}
+
+.animais-lista::-webkit-scrollbar-track { /*estilizando a parte de tras do scroll*/
+  background: #faf6ed;
+}
+
+.animais-descricao {
+  grid-column: 3;
+}
+
+.animais-descricao section {
+  margin-bottom: 3rem;
+}
+
+.faq-lista {
+  grid-column: 2 / 4;
+}
+
+.faq-lista dt {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: bold;
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+  color: #E54;
+}
+
+.faq-lista dt::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 10px;
+  margin-right: 10px;
+  background: #FB5;
+}
+
+.faq-lista dd {
+  font-family: Helvetica, Arial;
+  margin-bottom: .5rem;
+  margin-left: 30px;
+}
+
+.mapa {
+  grid-column: 2;
+}
+
+.dados {
+  grid-column: 3;
+}
+
+.dados li {
+  margin-bottom: 1rem;
+  font-family: Helvetica, Arial;
+}
+
+.dados li::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 10px;
+  margin-right: 10px;
+  background: #FB5;
+}
+
+.copy {
+  grid-column: 3/5;
+  margin-bottom: 2rem;
+  background: #FB5;
+}
+
+.copy p {
+  padding: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: bold;
+}
+
+@media (max-width: 700px) { /*apos 700px ele começa a quebrar*/
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  .menu, .grid-section, .copy { /*os 3 itens que estão dentro do body*/
+    grid-column: 1; /*agora todos eles serão posicionados na column 1*/
+  }
+  .grid-section {
+    grid-template-columns: 100px 1fr;
+    grid-gap: 10px;
+  }
+  .animais-lista {
+    grid-column: 1;
+  }
+  .faq-lista, .dados, .mapa {
+    grid-column: 1/3; /*ou seja as duas colunas*/
+  }
+  .grid-section h1 {
+    font-size: 3rem;
+  }
+  .menu {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.js [data-tab="content"] section{
+  display: none; /*para sumir o conteúdo, para esconder*/
+}
+
+[data-tab="content"] section.ativo { /*quando tiver a classe ativo na section*/
+  display: block !important; /*vai ficar visivel somente qdo clicar na imagem e assim ativando a classe ativo*/
+}
+
+[data-tab="content"] section.ativo.show-right { /*quando tiver a classe ativo na section e tambem a classe show-right*/
+  animation: show-right .5s forwards ; /*tem total da animação de 0.5segundos e cada animação fique no estado final forwards*/
+}
+
+[data-tab="content"] section.ativo.show-down { /*quando tiver a classe ativo na section e tambem a classe show-down*/
+  animation: show-down .5s forwards ; /*tem total da animação de 0.5segundos e cada animação fique no estado final forwards*/
+}
+
+/*animação com css*/
+@keyframes show-right {
+  from { /*sai de: */
+    opacity: 0; /*opacidade zero*/
+    transform: translate3d(-30px, 0, 0); /*e transforme em 3d => move o conteudo em 3 eixos: primeiro eixo x, depois y e z*/
+  }
+  to { /*vai para: */
+    opacity: 1; /*opacidade 1*/
+    transform: translate3d(0, 0, 0); /*e vai voltar para posição inicial de zero*/
+  }
+}
+
+@keyframes show-down {
+  from { /*sai de: */
+    opacity: 0; /*opacidade zero*/
+    transform: translate3d(0, -30px, 0); /*começa de cima pra baixo*/
+  }
+  to { /*vai para: */
+    opacity: 1; /*opacidade 1*/
+    transform: translate3d(0, 0, 0); /*e vai voltar para posição inicial de zero*/
+  }
+}
+
+.js [data-anime="accordion"] dd {
+  display: none; /*nao mostrar os dd*/
+}
+
+[data-anime="accordion"] dt::after {
+  content: '⮧';
+  margin-left: 10px;
+}
+
+[data-anime="accordion"] dt.ativo::after { /*quando estiver adicionado a classe '.ativo' mudará a seta */
+  content: '⮥';
+}
+
+[data-anime="accordion"] dd.ativo {/*mostrar o dt quando estiver ativo*/
+  display: block;
+  animation: slideDown .5s fowards; /*fowards para manter o estado final*/
+}
+
+@keyframes slideDown  { /*faça um slide pra baixo*/
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    max-height: 2px;
+    opacity: 1;
+  }
+}
+
+.js [data-anime="scroll"] {
+  opacity: 0;
+  transform: translate3d(-30px, 0, 0);
+  transition: .3s;
+}
+
+.js [data-anime="scroll"].ativo {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+[data-semana]::after {
+  display: inline-block;
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #E54;
+  border-radius: 50%;
+  margin-left: 4px;
+  border: 2px solid #000;
+}
+
+[data-semana].aberto::after {
+  background: #3f4;
+}
+
+.btc-preco {
+  background: #3f4;
+  padding: .2rem .5rem;
+  font-weight: bold;
+  border-radius: 2px;
+}

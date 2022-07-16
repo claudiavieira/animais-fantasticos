@@ -1,0 +1,50 @@
+[data-dropdown] {
+  position: relative; /*fica um embaixo do outro neste caso*/
+}
+
+[data-dropdown] .dropdown-menu {
+  display: none; /* nao mostra o drodown*/
+}
+
+[data-dropdown]:hover .dropdown-menu,
+[data-dropdown].active .dropdown-menu{
+  display: block; /* ao passar o mouse, mostra o dropdown*/
+  animation: show-up .3s forwards;
+}
+
+@keyframes show-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0,30px,0); /* 0 30px para baixo*/
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0,0,0); 
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  background: #E54;
+  top: 38px;
+  border: 2px solid #333;
+  z-index: 200; /* ele deixa aparecer na frente do que esta por trás. Se eu tirar o z-index ele vai ficar atras do item*/
+}
+
+.dropdown-menu::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -10px;
+
+  /* desenhando o triangulo: */
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #E54;
+}
+
+.dropdown-menu li a:hover {
+  color: white; /* ao passar o mouse sobre ficara cor branca o texto*/
+}

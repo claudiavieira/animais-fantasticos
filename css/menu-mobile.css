@@ -1,0 +1,53 @@
+[data-menu="button"] {
+  display: none; /* não mostrar o botão */
+}
+
+@media (max-width: 700px) {
+  .js [data-menu="button"] { /* só quando tiver o js irá mostrar o menu mobile */
+    display: flex; /* mostra o botão quando a largura máxima for 700px*/
+    background: #222;
+    border: none;
+    padding: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px;
+    align-items: center;
+    position: relative;
+    z-index: 300;
+  }
+  .js [data-menu="button"]::before {
+    margin-right: 4px;
+    content: '';
+    display: inline-block;
+    height: 2px;
+    width: 12px;
+    background: #FFF;
+    box-shadow: 0 4px #fff, 0 -4px #fff; /* pra criar os 3 tracinhos do menu*/
+    transition: transform .3s;
+  }
+  .js [data-menu="button"].active::before {
+    transform: rotate(90deg); /* rodar em 90 graus, vai virar os 3 tracinhos na vertical */
+  }
+  .js [data-menu="list"] {
+    display: none; 
+    position: absolute; /* para posicionar acima de tudo*/
+    background: #fb5;
+    width: 160px;
+    z-index: 200; /* pra ficar por cima*/
+    top: 0;
+    padding: 60px 0 20px 0;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,.2); /* sombra */
+  }
+  .js [data-menu="list"].active {
+    display: block; /* pra ficar um embaixo do outro. Se fosse display flex ficaria um ao lado do outro*/
+    animation: show-right .3s forwards;
+  }
+  .js .dropdown-menu {
+    position: static;
+    border: none; /* fica com posicionamento static mas nao ficará mais por cima de todos os itens*/
+  }
+}
