@@ -1,27 +1,33 @@
-export default function initScrollSuave() {
-  const linksInternos = document.querySelectorAll('[data-menu="suave"] a[href^="#"]'); // em js-menu quero selecionar todos os 'a' que começarem como href com o # que é o link interno
+export default class ScrollSuave {
+  constructor(links, options) { // no construtor sempre passamos o que queremos como argumento que o usuario coloque
+    this.linksInternos = document.querySelectorAll(links);
+    if (options === undefined) {
+      this.options = { behavior: 'smooth', block: 'start' };
+    } else {
+      this.options = options;
+    }
 
-  function scrollToSection(event) {
+    // o bind conseguimos definir qual vai ser o this da função.E ele retorna uma função
+    this.scrollToSection = this.scrollToSection.bind(this);
+  }
+
+  scrollToSection(event) {
     event.preventDefault();
     const href = event.currentTarget.getAttribute('href');// pegando href do item que cliquei
     const section = document.querySelector(href);
-    // console.log(section);
-
-    // com o scrollTo, podemos passar direto 2 argumentos: o eixo x e o eixo y. Nesse caso como nao quero mover na horizontal (eixo x) entao vou passar zero, mas quero mover na vertical (eixo y), entao vou colocar pra mover 1000px
-
-    section.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-    // Forma alternativa
-    /* const topo = section.offsetTop;
-    window.scrollTo({
-      top: topo,
-      behavior: 'smooth'
-    }) */
+    section.scrollIntoView(this.options);
   }
 
-  linksInternos.forEach((link) => {
-    link.addEventListener('click', scrollToSection);
-  });
+  addLinkEvent() {
+    this.linksInternos.forEach((link) => {
+      link.addEventListener('click', this.scrollToSection);
+    });
+  }
+
+  init() {
+    if (this.linksInternos.length) {
+      this.addLinkEvent();
+    }
+    return this;
+  }
 }
