@@ -1,29 +1,56 @@
 export default class ScrollAnima {
   constructor(sections) {
     this.sections = document.querySelectorAll(sections);
-    this.windowMetade = window.innerHeight * 0.6;
+    this.windowMetade = window.innerHeight * 0.6; // ao inves da animação ocorrer no topo, ela ocorre mais ou menos na metade da tela (40% da tela) que é o que falta de 0.6
 
-    this.animaScroll = this.animaScroll.bind(this);
+    // é preciso dar um bind do this.checkDistance só porque o animaScroll() é uma função de callback dentro de uma classe
+    // Uma função callback é uma função passada a outra função como argumento, que é então invocado dentro da função externa para completar algum tipo de rotina ou ação.
+    this.checkDistance = this.checkDistance.bind(this);
   }
 
-  animaScroll() {
-    // saber distancia de cada elemento do topo
-    this.sections.forEach((section) => {
-      const sectionTop = section.getBoundingClientRect().top;
-      const isSectionVisible = (sectionTop - this.windowMetade) < 0;
-      // console.log(isSectionVisible);
-      // console.log(sectionTop);
-      if (isSectionVisible) {
-        // console.log('animar');
-        section.classList.add('ativo');
-      } else if (section.classList.contains('ativo')) {
-        section.classList.remove('ativo');
+  // Pega a distancia de cada item em relação ao topo do site
+  getDistance() {
+    // Pegando a distacia de cada section.
+    /* Para retornar um valor preciso substituir o forEach por map, mas só posso usar map em array. E sections não é array mas sim arraylike, entao preciso transformar em array.
+    Posso transformar de varias formas, usando array.From ou desestruturando [...this.sections].map
+    */
+    // this.distance = this.sections.forEach((section) => {
+    this.distance = [...this.sections].map((section) => {
+      const offset = section.offsetTop; // a distancia entre a seção e o topo, número fixo
+      console.log('a distancia é de ', offset);
+      return {
+        element: section,
+        offset: Math.floor(offset - this.windowMetade),
+      };
+    });
+    console.log(this.distance);
+  }
+
+  // Verifica a distancia em cada objeto em relação ao scroll do site
+  checkDistance() {
+    // Verificar se o offset do elemento ja passou do scroll, como saber onde o scroll está? em window.pageYOffset
+    console.log(window.pageYOffset);
+    this.distance.forEach((item) => {
+      if (window.pageYOffset > item.offset) {
+        item.element.classList.add('ativo');
+      } else if (item.element.classList.contains('ativo')) {
+        item.element.classList.remove('ativo');
       }
+      console.log(item.element);
     });
   }
 
   init() {
-    this.animaScroll();
-    window.addEventListener('scroll', this.animaScroll);
+    if (this.sections.length) {
+      this.getDistance();
+      this.checkDistance();
+      window.addEventListener('scroll', this.checkDistance);
+    }
+    return this;
+  }
+
+  // remove o event de scroll
+  stop() {
+    window.removeEventListener('scroll', this.checkDistance);
   }
 }
