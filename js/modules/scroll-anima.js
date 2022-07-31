@@ -1,3 +1,5 @@
+import debounce from './debounce';
+
 export default class ScrollAnima {
   constructor(sections) {
     this.sections = document.querySelectorAll(sections);
@@ -5,7 +7,7 @@ export default class ScrollAnima {
 
     // é preciso dar um bind do this.checkDistance só porque o animaScroll() é uma função de callback dentro de uma classe
     // Uma função callback é uma função passada a outra função como argumento, que é então invocado dentro da função externa para completar algum tipo de rotina ou ação.
-    this.checkDistance = this.checkDistance.bind(this);
+    this.checkDistance = debounce(this.checkDistance.bind(this), 50); // o debounce faz com que a função seja ativada menos vezes
   }
 
   // Pega a distancia de cada item em relação ao topo do site
@@ -29,6 +31,7 @@ export default class ScrollAnima {
   // Verifica a distancia em cada objeto em relação ao scroll do site
   checkDistance() {
     // Verificar se o offset do elemento ja passou do scroll, como saber onde o scroll está? em window.pageYOffset
+    console.log('teste debounce');
     console.log(window.pageYOffset);
     this.distance.forEach((item) => {
       if (window.pageYOffset > item.offset) {
