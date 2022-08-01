@@ -19,27 +19,27 @@ export default class ScrollAnima {
     // this.distance = this.sections.forEach((section) => {
     this.distance = [...this.sections].map((section) => {
       const offset = section.offsetTop; // a distancia entre a seção e o topo, número fixo
-      console.log('a distancia é de ', offset);
+      // console.log('a distancia é de ', offset);
       return {
         element: section,
         offset: Math.floor(offset - this.windowMetade),
       };
     });
-    console.log(this.distance);
+    // console.log(this.distance);
   }
 
   // Verifica a distancia em cada objeto em relação ao scroll do site
   checkDistance() {
     // Verificar se o offset do elemento ja passou do scroll, como saber onde o scroll está? em window.pageYOffset
-    console.log('teste debounce');
-    console.log(window.pageYOffset);
+    // console.log('teste debounce');
+    // console.log(window.pageYOffset);
     this.distance.forEach((item) => {
       if (window.pageYOffset > item.offset) {
         item.element.classList.add('ativo');
       } else if (item.element.classList.contains('ativo')) {
         item.element.classList.remove('ativo');
       }
-      console.log(item.element);
+      // console.log(item.element);
     });
   }
 
