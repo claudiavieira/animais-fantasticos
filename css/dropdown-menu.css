@@ -48,3 +48,11 @@
 .dropdown-menu li a:hover {
   color: white; /* ao passar o mouse sobre ficara cor branca o texto*/
 }
+
+/* Ativa o menu quando estiver o dropdown no mobile*/
+@media (max-width: 700px) {
+  [data-dropdown] .dropdown-menu {
+    display: block; /* ao passar o mouse, mostra o dropdown*/
+    animation: show-up .3s forwards;
+  }
+}
